@@ -111,7 +111,7 @@ Predicting **how much life is left before failure (RUL)** allows operators to:
 ## 👥 Team Roles
 | Member | Role | Responsibility |
 |---------|------|----------------|
-| Datta Sai V V N | Lead / Modeling | EDA, feature engineering, LSTM/GRU implementation |
+| Member 1 | Lead / Modeling | EDA, feature engineering, LSTM/GRU implementation |
 | Member 2 | Data Engineer | Cleaning, RUL labeling, failure segmentation |
 | Member 3 | ML Engineer | Baseline models (RF, XGBoost), hyperparameter tuning |
 | Member 4 | Visualization | Dashboard (Streamlit / Plotly) and documentation |
