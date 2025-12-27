@@ -55,8 +55,8 @@ def calculate_rul(df, failure_events):
 
 # --- Sidebar ---
 st.sidebar.title("RailLife Dashboard")
-# Team details REMOVED as requested
-page = st.sidebar.radio("Navigation", ["Final Results", "Data Explorer", "Visualizations", "Ground Truth RUL"])
+# Updated Navigation to include Project Overview
+page = st.sidebar.radio("Navigation", ["Final Results", "Project Overview", "Data Explorer", "Visualizations", "Ground Truth RUL"])
 
 # --- Constants ---
 FAILURE_EVENTS = [
@@ -125,8 +125,6 @@ if page == "Final Results":
     
     with col_bot_left:
         st.subheader("Error Distribution Comparison")
-        # Placeholder or static image if error distribution is not available
-        # It's not in the file list, so we might skip or put a placeholder
         st.info("Error Distribution Data not available for interactive plotting.")
         
     with col_bot_right:
@@ -144,6 +142,45 @@ if page == "Final Results":
                           color="Importance", color_continuous_scale="Viridis")
         fig_feat.update_layout(showlegend=False, height=350, margin=dict(l=0, r=0, t=30, b=0))
         st.plotly_chart(fig_feat, use_container_width=True)
+
+elif page == "Project Overview":
+    st.title("Project Overview")
+    st.markdown("### RailLife: Predictive Maintenance")
+    # Reduced details, no team members
+    
+    st.write("""
+    RailLife is an advanced machine learning system for predicting the **Remaining Useful Life (RUL)** of train air production units. 
+    Traditional railway maintenance relies on fixed schedules, leading to inefficiencies and unexpected breakdowns. 
+    This system utilizes sensor data from the MetroPT-3 dataset to enable **condition-based maintenance**.
+    """)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Problem Statement")
+        st.info("""
+        - **High Cost**: Unexpected breakdowns cost >$50k per incident.
+        - **Inefficiency**: Fixed-schedule maintenance wastes resources.
+        - **Safety Risk**: Failures can occur between scheduled checks.
+        """)
+    with col2:
+        st.subheader("Goal")
+        st.success("""
+        - Develop a predictive model.
+        - Target Accuracy: **< 50 hours of error** in RUL prediction.
+        - Enable proactive maintenance scheduling.
+        """)
+    
+    st.subheader("Known Failure Events")
+    events_df = pd.DataFrame(FAILURE_EVENTS)
+    display_df = events_df.copy()
+    display_df["start"] = display_df["start"].dt.strftime("%Y-%m-%d %H:%M")
+    display_df["end"] = display_df["end"].dt.strftime("%Y-%m-%d %H:%M")
+    st.table(display_df)
+    
+    st.markdown("---")
+    st.subheader("Model Architecture (LSTM)")
+    if os.path.exists("LSTM.png"):
+        st.image("LSTM.png", caption="LSTM Network Structure", width=400)
 
 elif page == "Data Explorer":
     st.title("Data Explorer 📊")
